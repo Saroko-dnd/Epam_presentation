@@ -1,0 +1,20 @@
+.code-block-with-output pre {
+    width: 80%;
+}
+
+.code-block-with-output pre code {
+    width: 100%;
+}
+
+.code-block-with-output .output {
+    width: 10%;
+    font-size: 24px;
+}
+
+.code-block-with-output * {
+    margin: 0 0 0 0 !important;
+}
+
+.code-block-with-output *:not(b) {
+    float: left;
+}
