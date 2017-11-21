@@ -1,253 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>MobX</title>
-        <link rel="icon" href="img/TitleIcon.png">
-        <link rel="stylesheet" href="css/theme/moon.css">
-        <link rel="stylesheet" href="css/reveal.css">
-        <link rel="stylesheet" href="css/presentation.css">
-        <script type="text/javascript" src="js/reveal.js"></script>
-        <script type="text/javascript" src="js/presentation.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Assembly</title>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/moon.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/reveal.js" async></script>
+    <script src="js/main.js" async></script>
+</head>
 
-    <body>
-        <div class="reveal">
-            <div class="slides">
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <img src="img/WebAssemblyLogo.jpg" alt="Web Assembly Logo">
+                <h1>Web Assembly</h1>
+                <div></div>
+                <div class="contacts">Igor Saroko
+                    <span class="email">isaroko@mail.ru</span>
+                </div>
+            </section>
+            <section>
                 <section>
-                    <img src="img/MobxLogo.png" alt="">
-                    <h1>MobX</h1>
-                    <footer class="slide-footer">
-                        <p>by Igor Saroko</p>
-                    </footer>
+                    <h2>Before Web Assembly</h2>
                 </section>
                 <section>
-                    <section>
-                        <h2>
-                          MobX core idea
-                        </h2>
-                        <h3>Simple, scalable state management</h3>
-                    </section>
-                    <section>
-                        <h2>
-                          MobX philosophy
-                        </h2>
-                        <p>
-                            Anything that can be derived from the application state, should be derived. Automatically.
-                        </p>
-                    </section>
-                    <section>
-                        <h2>
-                            React and MobX together are a powerful combination.
-                        </h2>
-                        <p>React renders the application state</p>
-                        <p>MobX provides the mechanism to store and update the application
-                            state
-                        </p>
-                    </section>
+                    <h2>asm.js</h2>
+                    <img src="img/asmJsExample.png" alt="asm.js example">
                 </section>
                 <section>
-                    <section>
-                        <h2>
-                          Core concepts
-                        </h2>
-                        <h4>Observable state</h4>
-                        <h4>Computed values</h4>
-                        <h4>Reactions</h4>
-                        <h4>Actions</h4>
-                    </section>
-                    <section>
-                        <h2>
-                          1. Observable state
-                        </h2>
-                        <p>Example (ES7 or TypeScript, Babel) </p>
-                        <pre>
-                          <code>
-                            class Todo {
-                                id = Math.random();
-                                <b>@observable</b> title = "";
-                                <b>@observable</b> finished = false;
-                            }
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <p>Example (Object with a prototype)</p>
-                        <pre>
-                          <code>
-                            function Todo() {
-                                this.id = Math.random()
-                                <b>extendObservable</b>(this, {
-                                    title: "",
-                                    finished: false
-                                })
-                            }
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <p>Example (Plain objects, arrays and js primitives)</p>
-                        <pre>
-                          <code>
-                            let temperature = <b>observable</b>(20);
-
-                            let list = <b>observable</b>([1, 2, 4]);
-
-                            let person = <b>observable</b>({
-                                firstName: "Clive Staples",
-                                lastName: "Lewis"
-                            });
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <h2>
-                          2. Computed values
-                        </h2>
-                        <p>Example (ES7 way)</p>
-                        <pre>
-<code>
-
-class TodoList {
-    <b>@observable</b> todos = [];
-    <b>@computed</b> unfinishedTodoCount() {
-        return this.todos.filter(todo => !todo.finished).length;
-    }
-}</code>
-                        </pre>
-                    </section>
-                    <section>
-                        <p>Example (Old way)</p>
-                        <pre>
-<code>
-var name = <b>observable</b>("John");
-
-var upperCaseName = <b>computed</b>(() =>
-    name.get().toUpperCase()
-);</code>
-                        </pre>
-                    </section>
-                    <section>
-                        <h2>
-                          3. Reactions
-                        </h2>
-                        <p>Example with React (ES 7 way)</p>
-                        <pre>
-                          <code>
-class TodoList {
-    <b>@observable</b> todos = [];
-    <b>@computed</b> get unfinishedTodoCount() {
-        return this.todos.filter(todo => !todo.finished).length;
-    }
-}
-<b>@observer</b>
-class TodoListView extends Component {
-    render() {
-        return &lt;div&gt;{this.props.todoList.unfinishedTodoCount}&lt;/div&gt;
-    }
-}
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <p>Example with React (Old way)</p>
-                        <pre>
-                          <code>
-const ReactObserver = <b>observer</b>(class TodoListView extends Component {
-    render() {
-        return &lt;div&gt;{this.props.todoList.unfinishedTodoCount}&lt;/div&gt;
-    }
-})
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <p>Example with Autorun function</p>
-                        <pre>
-                          <code>
-let numbers = <b>observable</b>([1,2,3]);
-
-let logger = <b>autorun</b>(() => console.log(numbers.length));
-                          </code>
-                        </pre>
-                    </section>
-                    <section>
-                        <h2>4. Actions</h2>
-                        <p>Example with action function</p>
-                        <div class="code-block-with-output">
-                            <pre>
-                              <code>
-let ObservableProperty = <b>observable</b>(20);
-let Log = <b>autorun</b>(() => console.log(ObservableProperty));
-let setProperty = mobx.<b>action</b>(() => {
-    for (let Index = 0; Index < 10; ++Index)
-    {
-        ObservableProperty = Index;
-    }
-
-    ObservableProperty = 50;
-})
-
-setProperty();
-                              </code>
-                            </pre>
-                            <div class="output">
-                                <p>Output:</p>
-                            </div>
-                            <div class="output">
-                                <p>50</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <p>Example (usual way)</p>
-                        <div class="code-block-with-output">
-                            <pre>
-                              <code>
-let ObservableProperty = <b>observable</b>(20);
-let Log = <b>autorun</b>(() => console.log(ObservableProperty));
-let setProperty = () => {
-    for (let Index = 0; Index < 10; ++Index)
-    {
-        ObservableProperty = Index;
-    }
-
-    ObservableProperty = 50;
-}
-
-setProperty();
-                              </code>
-                            </pre>
-                            <div class="output">
-                                <p>Output:</p>
-                            </div>
-                            <div class="output">
-                                <p>0<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>50</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <img src="img/flow.png" alt="">
-                    </section>
+                    <h2>Native Client (Google)</h2>
+                    <img src="img/NСscheme.png" alt="Native Client work scheme">
                 </section>
                 <section>
-                    <h2>MobX: Simple and scalable</h2>
-                    <p>MobX is one of the least obtrusive libraries you can use for
-                        state management. </p>
-                    <h4>1. Using classes and real references</h4>
-                    <h4>2. Easy interoperability</h4>
-                    <h4>3. Simpler actions are easier to maintain</h4>
-                    <h4>4. Fine grained observability is efficient</h4>
-                    <h4>5. Referential integrity is guaranteed</h4>
+                    <h2>WebCl</h2>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/RviAF98lQOQ" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/e1OKhTHexm8" frameborder="0" allowfullscreen></iframe>
+                </section>
+            </section>
+            <section>
+                <img src="img/WAintroduction.jpg" alt="Web Assembly introduction">
+            </section>
+            <section>
+                <section>
+                    <h2>What is WebAssembly?</h2>
                 </section>
                 <section>
-                    <p>Thank you for your attention</p>
+                    <h2>.wasm files</h2>
+                    <img src="img/wasmExample.png" alt="C to .wasm example">
                 </section>
-            </div>
+                <section>
+                    <h2>.wat (.wast) files</h2>
+                    <img src="img/watExample.png" alt="s-expression code and linear assembly bytecode">
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>How to add some C/C++ code to your web application using WebAssembly?</h2>
+                </section>
+                <section>
+                    <h2>The most straightforward way</h2>
+                    <img src="img/wasmChain.png" alt="wasm chain">
+                </section>
+                <section>
+                    <h2>Javascript glue code examples</h2>
+                    <img class="fragment" src="img/JJSWasmBasicExample.png" alt="Loading wasm modules from JS">
+                    <img class="fragment" src="img/JSWasmAdvancedExample.png" alt="Loading wasm modules from JS">
+                    <a class="fragment" href="https://developer.mozilla.org/en-US/docs/WebAssembly/Using_the_JavaScript_API">WebAssembly JavaScript API documentation</a>
+                </section>
+                <section>
+                    <h2>Apart from Emscripten you can also use more advanced tools</h2>
+                    <a href="https://github.com/WebAssembly/wabt">WABT</a>
+                    <a href="https://github.com/WebAssembly/binaryen">Binaryen</a>
+                </section>
+            </section>
+            <section>
+                <h2>Security</h2>
+                <img src="img/WAscheme.png" alt="Web Assembly work scheme">
+            </section>
+            <section>
+                <section>
+                    <h2>Examples of some games exported in WebAssembly</h2>
+                </section>
+                <section>
+                    <h2>Tanks! Demo</h2>
+                    <img src="img/WAtanksDemo.jpg" alt="Web Assembly work scheme">
+                    <a href="http://webassembly.org/demo/Tanks/" target="_blank">Play tanks</a>
+                </section>
+                <section>
+                    <h2>Zen Garden (by Epic)</h2>
+                    <img src="img/ZenGardenScreenshot.jpg" alt="Web Assembly work scheme">
+                    <a href="https://s3.amazonaws.com/mozilla-games/ZenGarden/EpicZenGarden.html" target="_blank">Play Zen Garden</a>
+                </section>
+            </section>
+            <section>
+                <h1>May the Force of WebAssembly be with you</h1>
+            </section>
         </div>
-    </body>
+    </div>
+</body>
 
 </html>
