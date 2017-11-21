@@ -1,0 +1,15 @@
+.contacts {
+  color: #fff; }
+
+.email {
+  color: #1e8d0d; }
+
+.reveal .slides section {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .reveal .slides section img {
+    background-color: #fff; }
+  .reveal .slides section a {
+    font-size: 4rem;
+    font-weight: 900; }
